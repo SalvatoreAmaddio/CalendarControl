@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CalendarControl"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    >
+
+    <Style TargetType="{x:Type local:MonthView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MonthView}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <Border Width="1310" HorizontalAlignment="Left" 
+                            Padding="{TemplateBinding Padding}" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <local:BindingProxy Data="{Binding AddEventCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="addCommand"/>
+                                    <local:BindingProxy Data="{Binding EventDropCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="eventDroppedCommand"/>
+                                    <local:BindingProxy Data="{Binding SelectedEventCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="selectedCommand"/>
+                                    <local:BindingProxy Data="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="deleteCommand"/>
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <ItemsControl x:Name="weekDaysControl" ItemsSource="{TemplateBinding DayNames}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <materialDesign:Card Margin="8" Width="170" Padding="10">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding .}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                    </StackPanel>
+                                                </materialDesign:Card>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <ItemsControl x:Name="PART_daySlots" 
+                                              Grid.Row="1" 
+                                              VirtualizingStackPanel.IsVirtualizing="True"
+                                              VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                              ScrollViewer.CanContentScroll="True"
+                                              ItemsSource="{TemplateBinding CalendarDays}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:DayCard CalendarDay="{Binding .}"
+                                                           EventDropCommand="{Binding Data, Source={StaticResource eventDroppedCommand}}"
+                                                           DeleteCommand="{Binding Data, Source={StaticResource deleteCommand}}"
+                                                           AddEventCommand="{Binding Data, Source={StaticResource addCommand}}"
+                                                           SelectedEventCommand="{Binding Data, Source={StaticResource selectedCommand}}"
+                                                           />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
