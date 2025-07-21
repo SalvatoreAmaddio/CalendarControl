@@ -63,6 +63,7 @@
                                      >
                                     <ListBox.Resources>
                                         <local:BindingProxy Data="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="deleteCommand"/>
+                                        <local:BindingProxy Data="{Binding DeleteToolTip, RelativeSource={RelativeSource TemplatedParent}}" x:Key="deleteToolTip"/>
                                         <Style TargetType="ListBoxItem">
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -83,7 +84,11 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock VerticalAlignment="Center" Background="#A8CAE8" Text="{Binding .}" TextWrapping="NoWrap" ToolTip="{Binding Title}"/>
-                                                    <Button Grid.Column="1" ToolTip="Elimina" Command="{Binding Data, Source={StaticResource deleteCommand}}" CommandParameter="{Binding .}" Height="15" Margin="5,0,0,0" Padding="0" HorizontalAlignment="Right">
+                                                    <Button Grid.Column="1" 
+                                                            ToolTip="{Binding Data, Source={StaticResource deleteToolTip}}" 
+                                                            Command="{Binding Data, Source={StaticResource deleteCommand}}" 
+                                                            CommandParameter="{Binding .}"
+                                                            Height="15" Margin="5,0,0,0" Padding="0" HorizontalAlignment="Right">
                                                         <materialDesign:PackIcon Kind="CloseBold" Foreground="WhiteSmoke"/>
                                                     </Button>
                                                 </Grid>

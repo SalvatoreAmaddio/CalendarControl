@@ -313,7 +313,7 @@ public class WeekView : AbstractCalendarView
         {
             Tag = datable,
             Cursor = Cursors.Hand,
-            ToolTip = "Clicca per Aggiungere/Modificare",
+            ToolTip = rm.GetString("WeekViewEvent", Culture) ?? "Error",
             Text = string.Empty,
             TextWrapping = TextWrapping.Wrap,
             Padding = new Thickness(6),

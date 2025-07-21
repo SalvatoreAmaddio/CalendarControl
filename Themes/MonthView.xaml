@@ -17,6 +17,7 @@
                             <Grid>
                                 <Grid.Resources>
                                     <local:BindingProxy Data="{Binding AddEventCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="addCommand"/>
+                                    <local:BindingProxy Data="{Binding Culture, RelativeSource={RelativeSource TemplatedParent}}" x:Key="culture"/>
                                     <local:BindingProxy Data="{Binding EventDropCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="eventDroppedCommand"/>
                                     <local:BindingProxy Data="{Binding SelectedEventCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="selectedCommand"/>
                                     <local:BindingProxy Data="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}" x:Key="deleteCommand"/>
@@ -59,6 +60,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <local:DayCard CalendarDay="{Binding .}"
+                                                           Culture="{Binding Data, Source={StaticResource culture}}"
                                                            EventDropCommand="{Binding Data, Source={StaticResource eventDroppedCommand}}"
                                                            DeleteCommand="{Binding Data, Source={StaticResource deleteCommand}}"
                                                            AddEventCommand="{Binding Data, Source={StaticResource addCommand}}"

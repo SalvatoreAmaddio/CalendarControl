@@ -4,16 +4,34 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
+using System.Resources;
 
 namespace CalendarControl;
 
 public class DayCard : Control, IDisposable
 {
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, DayCard>(nameof(DeleteCommand));
+    public static readonly DependencyProperty DeleteToolTipProperty = Helper.Register<string, DayCard>(nameof(DeleteToolTip));
     public static readonly DependencyProperty EventDropCommandProperty = Helper.Register<ICommand, DayCard>(nameof(EventDropCommand));
     public static readonly DependencyProperty SelectedEventCommandProperty = Helper.Register<ICommand, DayCard>(nameof(SelectedEventCommand));
     public static readonly DependencyProperty AddEventCommandProperty = Helper.Register<ICommand, DayCard>(nameof(AddEventCommand));
     public static readonly DependencyProperty CalendarDayProperty = Helper.Register<CalendarDay, DayCard>(nameof(CalendarDay));
+    public static readonly DependencyProperty CultureProperty =
+    Helper.Register<CultureInfo, DayCard>(nameof(Culture), CultureInfo.CurrentUICulture, OnCulturePropertyChanged);
+    
+    private readonly ResourceManager rm = new("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
+
+    public string DeleteToolTip 
+    {
+        get => (string)GetValue(DeleteToolTipProperty);
+        set => SetValue(DeleteToolTipProperty, value);
+    }
+
+    public CultureInfo Culture
+    {
+        get => (CultureInfo)GetValue(CultureProperty);
+        set => SetValue(CultureProperty, value);
+    }
 
     public ICommand EventDropCommand
     {
@@ -54,6 +72,14 @@ public class DayCard : Control, IDisposable
     static DayCard()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DayCard), new FrameworkPropertyMetadata(typeof(DayCard)));
+    }
+
+    private static void OnCulturePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is DayCard control)
+        {
+            control.DeleteToolTip = control.rm.GetString("Delete", (CultureInfo)e.NewValue) ?? "Error";
+        }
     }
 
     public override void OnApplyTemplate()
