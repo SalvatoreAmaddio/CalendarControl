@@ -48,7 +48,7 @@ public class MonthView : AbstractCalendarView
 
     private void DistributeEvents()
     {
-        if (Events != null)
+        if (Events is not null && CalendarDays is not null)
         {
             CalendarDays = [.. CalendarDays];
 

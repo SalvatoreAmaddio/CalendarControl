@@ -23,6 +23,7 @@
 
                         <local:EventCalendarDateSetter x:Name="PART_eventCalendarDateSetter" 
                                                        Padding="10,10,10,30"
+                                                       Margin="{Binding HeaderMargin, RelativeSource={RelativeSource TemplatedParent}}"
                                                        Date="{Binding Date, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        IsToggled="{Binding IsToggled, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        />
@@ -36,19 +37,20 @@
                                         EventDropCommand="{Binding EventDropCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         SelectedEventCommand="{Binding SelectedEventCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         DeleteCommand="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=DateVisibility, Mode=TwoWay}"
                                         Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"
+                                        Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=DateVisibility, Mode=TwoWay}"
                                         />
 
                         <local:MonthView x:Name="PART_monthView" 
                                          Grid.Row="1"
-                                         Events="{Binding Events,Mode=TwoWay}"
+                                         Events="{Binding Events, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                         AddEventCommand="{Binding AddEventCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                         EventDropCommand="{Binding EventDropCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                         SelectedEventCommand="{Binding SelectedEventCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                         DeleteCommand="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"
                                          Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=YearVisibility, Mode=TwoWay}"
-                                         EventDropCommand="{Binding EventDropCommand}"
-                                         DeleteCommand="{Binding DeleteCommand}"
-                                         AddEventCommand="{Binding AddEventCommand}"
-                                         SelectedEventCommand="{Binding SelectedEventCommand}"
-                                         Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"/>
+                                         />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -14,10 +14,17 @@ public class Calendar : Control
     public static readonly DependencyProperty SelectedEventCommandProperty = Helper.Register<ICommand, Calendar>(nameof(SelectedEventCommand));
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, Calendar>(nameof(DeleteCommand));
     public static readonly DependencyProperty EventsProperty = Helper.Register<IEnumerable<IDatable>, Calendar>(nameof(Events));
+    public static readonly DependencyProperty HeaderMarginProperty = Helper.Register<Thickness, Calendar>(nameof(HeaderMargin));
 
     private EventCalendarDateSetter PART_eventCalendarDateSetter = null!;
     private WeekView PART_weekView = null!;
     private MonthView PART_monthView = null!;
+
+    public Thickness HeaderMargin
+    {
+        get => (Thickness)GetValue(HeaderMarginProperty);
+        set => SetValue(HeaderMarginProperty, value);
+    }
 
     public ICommand EventDropCommand
     {
@@ -66,6 +73,7 @@ public class Calendar : Control
         get => (DateTime)GetValue(DateProperty);
         set => SetValue(DateProperty, value);
     }
+    public double VerticalScrollPosition => PART_weekView.VerticalScrollPosition;
 
     static Calendar()
     {
@@ -79,9 +87,11 @@ public class Calendar : Control
         PART_weekView = GetTemplateChild("PART_weekView") as WeekView ?? throw new InvalidOperationException("PART_weekView not found in template.");
         PART_monthView = GetTemplateChild("PART_monthView") as MonthView ?? throw new InvalidOperationException("PART_monthView not found in template.");
     }
-
-    public void ScrollIntoView(double? offset = null) 
+    public void ScrollIntoView(double? offset = null)
     {
-        PART_weekView.ScrollToVerticalOffset(offset);
+        if (PART_weekView.Visibility == Visibility.Visible)
+        {
+            PART_weekView.ScrollToVerticalOffset(offset);
+        }
     }
 }
