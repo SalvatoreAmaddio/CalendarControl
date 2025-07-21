@@ -119,6 +119,30 @@ public class MonthView : AbstractCalendarView
         CalendarDays = Calculate(Date.Year, Date.Month);
         DistributeEvents();
     }
+
+    protected override void OnCultureChanged()
+    {
+        DateTimeFormatInfo dtf = Culture.DateTimeFormat;
+        string[] days = Enumerable.Range(1, 7)
+                                  .Select(i => dtf.GetDayName((DayOfWeek)(i % 7)).ToUpper())
+                                  .ToArray();
+
+        DayNames =
+        [
+            new() { Name = days[0] },
+            new() { Name = days[1] },
+            new() { Name = days[2] },
+            new() { Name = days[3] },
+            new() { Name = days[4] },
+            new() { Name = days[5], IsFestive = true },
+            new() { Name = days[6], IsFestive = true }
+        ];
+    }
+
+    protected override void UpdateLocalizedStrings()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class CalendarDayNameHeader

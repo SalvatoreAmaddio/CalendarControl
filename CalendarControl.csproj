@@ -7,7 +7,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Authors>Salvatore Amaddio</Authors>
 		<Company>Salvatore Amaddio</Company>
-		<Version>1.0.14</Version>
+		<Version>1.0.18</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>

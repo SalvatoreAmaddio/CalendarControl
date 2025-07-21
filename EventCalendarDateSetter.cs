@@ -23,8 +23,19 @@ public class EventCalendarDateSetter : Control
     public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, EventCalendarDateSetter>(nameof(Date));
     public static readonly DependencyProperty YearProperty = Helper.Register<int, EventCalendarDateSetter>(nameof(Year), DateTime.Now.Year, (s, e) => ((EventCalendarDateSetter)s).RefreshDate());
     public static readonly DependencyProperty MonthsProperty = Helper.Register<IEnumerable<string>, EventCalendarDateSetter>(nameof(Months));
+    
     public static readonly DependencyProperty SelectedMonthIndexProperty = 
     Helper.Register<int, EventCalendarDateSetter>(nameof(SelectedMonthIndex), DateTime.Now.Month - 1, (s, e) => ((EventCalendarDateSetter)s).RefreshDate());
+
+    public static readonly DependencyProperty CultureProperty =
+    Helper.Register<CultureInfo, EventCalendarDateSetter>(nameof(Culture), CultureInfo.CurrentUICulture, OnCultureChanged);
+
+    public CultureInfo Culture
+    {
+        get => (CultureInfo)GetValue(CultureProperty);
+        set => SetValue(CultureProperty, value);
+    }
+
     public string TodayContent
     {
         get => (string)GetValue(TodayContentProperty);
@@ -61,6 +72,36 @@ public class EventCalendarDateSetter : Control
         set => SetValue(MonthVisibilityProperty, value);
     }
 
+    private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EventCalendarDateSetter control)
+        {
+            control.Months = control.Culture.DateTimeFormat.MonthNames
+                .Where(m => !string.IsNullOrEmpty(m))
+                .ToArray();
+
+            control.UpdateLocalizedStrings();
+        }
+    }
+
+    private void UpdateLocalizedStrings()
+    {
+        var rm = new System.Resources.ResourceManager("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
+
+        if (IsToggled)
+        {
+            TodayContent = rm.GetString("TodayContentWeek", Culture) ?? "Error";
+            PreviousButtonTooltip = rm.GetString("PreviousWeek", Culture) ?? "Error";
+            NextButtonTooltip = rm.GetString("NextWeek", Culture) ?? "Error";
+        }
+        else
+        {
+            TodayContent = rm.GetString("TodayContentMonth", Culture) ?? "Error";
+            PreviousButtonTooltip = rm.GetString("PreviousMonth", Culture) ?? "Error";
+            NextButtonTooltip = rm.GetString("NextMonth", Culture) ?? "Error";
+        }
+    }
+
     private static void OnIsToggledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is EventCalendarDateSetter control && e.NewValue is bool isToggled)
@@ -70,15 +111,9 @@ public class EventCalendarDateSetter : Control
                 control.MonthVisibility = Visibility.Collapsed;
                 control.YearVisibility = Visibility.Collapsed;
                 control.DateVisibility = Visibility.Visible;
-                control.NextButtonTooltip = "Prossima Settimana";
-                control.PreviousButtonTooltip = "Settimana Precedente";
-                control.TodayContent = "Settimana Corrente";
             }
             else
             {
-                control.TodayContent = "Mese Corrente";
-                control.PreviousButtonTooltip = "Mese Precedente";
-                control.NextButtonTooltip = "Prossimo Mese";
                 control.MonthVisibility = Visibility.Visible;
                 control.YearVisibility = Visibility.Visible;
                 control.DateVisibility = Visibility.Collapsed;
@@ -92,6 +127,8 @@ public class EventCalendarDateSetter : Control
                     control.Year = control.Date.Year;
                 }
             }
+
+            control.UpdateLocalizedStrings();
         }
     }
 
@@ -231,6 +268,6 @@ public class EventCalendarDateSetter : Control
 
     private void RefreshDate()
     {
-        Date = new(Year, SelectedMonthIndex + 1, 1);
+        SetCurrentValue(DateProperty, new DateTime(Year, SelectedMonthIndex + 1, 1));
     }
 }

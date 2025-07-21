@@ -130,7 +130,7 @@ public class WeekView : AbstractCalendarView
         for (int dayOffset = 0; dayOffset < 7; dayOffset++)
         {
             DateTime currentDay = monday.AddDays(dayOffset);
-            string dayName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(currentDay.ToString("dddd d", new CultureInfo("it-IT")));
+            string dayName = Culture.TextInfo.ToTitleCase(currentDay.ToString("dddd d", Culture));
 
             switch (currentDay.DayOfWeek)
             {
@@ -464,6 +464,16 @@ public class WeekView : AbstractCalendarView
     protected override void OnDateChanged()
     {
         UpdateHeaders();
+    }
+
+    protected override void OnCultureChanged()
+    {
+        UpdateHeaders();
+    }
+
+    protected override void UpdateLocalizedStrings()
+    {
+        throw new NotImplementedException();
     }
 }
 

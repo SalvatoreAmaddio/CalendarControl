@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
+using System.Globalization;
 
 namespace CalendarControl;
 
@@ -12,6 +13,15 @@ public abstract class AbstractCalendarView : Control
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, AbstractCalendarView>(nameof(DeleteCommand));
     public static readonly DependencyProperty EventsProperty = Helper.Register<IEnumerable<IDatable>, AbstractCalendarView>(nameof(Events), OnEventsSourcePropertyChanged);
     public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, AbstractCalendarView>(nameof(Date), DateTime.Now, OnDatePropertyChanged);
+    
+    public static readonly DependencyProperty CultureProperty =
+    Helper.Register<CultureInfo, AbstractCalendarView>(nameof(Culture), CultureInfo.CurrentUICulture, OnCulturePropertyChanged);
+
+    public CultureInfo Culture
+    {
+        get => (CultureInfo)GetValue(CultureProperty);
+        set => SetValue(CultureProperty, value);
+    }
 
     public ICommand EventDropCommand
     {
@@ -64,6 +74,18 @@ public abstract class AbstractCalendarView : Control
             control.OnEventsChanged();
         }
     }
+
+    private static void OnCulturePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is AbstractCalendarView control)
+        {
+            control.OnCultureChanged();
+        }
+    }
+
+    protected abstract void OnCultureChanged();
+
+    protected abstract void UpdateLocalizedStrings();
 
     protected abstract void OnEventsChanged();
     protected abstract void OnDateChanged();

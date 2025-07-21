@@ -26,6 +26,7 @@
                                                        Margin="{Binding HeaderMargin, RelativeSource={RelativeSource TemplatedParent}}"
                                                        Date="{Binding Date, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        IsToggled="{Binding IsToggled, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       Culture="{Binding Culture, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        />
 
                         <ProgressBar IsIndeterminate="{Binding IsLoading, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Green" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom"/>
@@ -39,9 +40,10 @@
                                         DeleteCommand="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"
                                         Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=DateVisibility, Mode=TwoWay}"
+                                        Culture="{Binding ElementName=PART_eventCalendarDateSetter, Path=Culture, Mode=TwoWay}"
                                         />
 
-                        <local:MonthView x:Name="PART_monthView" 
+                        <local:MonthView x:Name="PART_monthView"
                                          Grid.Row="1"
                                          Events="{Binding Events, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                          AddEventCommand="{Binding AddEventCommand, RelativeSource={RelativeSource TemplatedParent}}"
@@ -50,6 +52,7 @@
                                          DeleteCommand="{Binding DeleteCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                          Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"
                                          Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=YearVisibility, Mode=TwoWay}"
+                                         Culture="{Binding ElementName=PART_eventCalendarDateSetter, Path=Culture, Mode=TwoWay}"
                                          />
                     </Grid>
                 </ControlTemplate>

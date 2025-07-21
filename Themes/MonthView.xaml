@@ -45,7 +45,7 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
 
-                                <ItemsControl x:Name="PART_daySlots" 
+                                <ItemsControl x:Name="PART_daySlots"
                                               Grid.Row="1" 
                                               VirtualizingStackPanel.IsVirtualizing="True"
                                               VirtualizingStackPanel.VirtualizationMode="Recycling"

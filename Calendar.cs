@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -15,10 +17,18 @@ public class Calendar : Control
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, Calendar>(nameof(DeleteCommand));
     public static readonly DependencyProperty EventsProperty = Helper.Register<IEnumerable<IDatable>, Calendar>(nameof(Events));
     public static readonly DependencyProperty HeaderMarginProperty = Helper.Register<Thickness, Calendar>(nameof(HeaderMargin));
+    public static readonly DependencyProperty CultureProperty =
+    Helper.Register<CultureInfo, Calendar>(nameof(Culture), CultureInfo.CurrentUICulture);
 
     private EventCalendarDateSetter PART_eventCalendarDateSetter = null!;
     private WeekView PART_weekView = null!;
     private MonthView PART_monthView = null!;
+
+    public CultureInfo Culture
+    {
+        get => (CultureInfo)GetValue(CultureProperty);
+        set => SetValue(CultureProperty, value);
+    }
 
     public Thickness HeaderMargin
     {
