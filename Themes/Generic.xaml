@@ -29,7 +29,7 @@
 
                         <ProgressBar IsIndeterminate="{Binding IsLoading, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Green" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom"/>
 
-                        <local:WeekView x:Name="weekView"
+                        <local:WeekView x:Name="PART_weekView"
                                         Grid.Row="1"
                                         Events="{Binding Events, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                         AddEventCommand="{Binding AddEventCommand, RelativeSource={RelativeSource TemplatedParent}}"
@@ -40,7 +40,8 @@
                                         Date="{Binding ElementName=PART_eventCalendarDateSetter, Path=Date, Mode=TwoWay}"
                                         />
 
-                        <local:MonthView Grid.Row="1"
+                        <local:MonthView x:Name="PART_monthView" 
+                                         Grid.Row="1"
                                          Events="{Binding Events,Mode=TwoWay}"
                                          Visibility="{Binding ElementName=PART_eventCalendarDateSetter, Path=YearVisibility, Mode=TwoWay}"
                                          EventDropCommand="{Binding EventDropCommand}"

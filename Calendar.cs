@@ -15,6 +15,10 @@ public class Calendar : Control
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, Calendar>(nameof(DeleteCommand));
     public static readonly DependencyProperty EventsProperty = Helper.Register<IEnumerable<IDatable>, Calendar>(nameof(Events));
 
+    private EventCalendarDateSetter PART_eventCalendarDateSetter = null!;
+    private WeekView PART_weekView = null!;
+    private MonthView PART_monthView = null!;
+
     public ICommand EventDropCommand
     {
         get => (ICommand)GetValue(EventDropCommandProperty);
@@ -66,5 +70,18 @@ public class Calendar : Control
     static Calendar()
     {
         DefaultStyleKeyProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(typeof(Calendar)));
+    }
+
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        PART_eventCalendarDateSetter = GetTemplateChild("PART_eventCalendarDateSetter") as EventCalendarDateSetter ?? throw new InvalidOperationException("PART_eventCalendarDateSetter not found in template.");
+        PART_weekView = GetTemplateChild("PART_weekView") as WeekView ?? throw new InvalidOperationException("PART_weekView not found in template.");
+        PART_monthView = GetTemplateChild("PART_monthView") as MonthView ?? throw new InvalidOperationException("PART_monthView not found in template.");
+    }
+
+    public void ScrollIntoView(double? offset = null) 
+    {
+        PART_weekView.ScrollToVerticalOffset(offset);
     }
 }
