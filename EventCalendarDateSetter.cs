@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using System.Resources;
 
 namespace CalendarControl;
 
@@ -29,6 +30,9 @@ public class EventCalendarDateSetter : Control
 
     public static readonly DependencyProperty CultureProperty =
     Helper.Register<CultureInfo, EventCalendarDateSetter>(nameof(Culture), CultureInfo.CurrentUICulture, OnCultureChanged);
+
+    private readonly ResourceManager rm = new("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
+
 
     public CultureInfo Culture
     {
@@ -86,8 +90,6 @@ public class EventCalendarDateSetter : Control
 
     private void UpdateLocalizedStrings()
     {
-        var rm = new System.Resources.ResourceManager("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
-
         if (IsToggled)
         {
             TodayContent = rm.GetString("TodayContentWeek", Culture) ?? "Error";

@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows;
 using System.Globalization;
+using System.Resources;
 
 namespace CalendarControl;
 
@@ -16,6 +17,8 @@ public abstract class AbstractCalendarView : Control
     
     public static readonly DependencyProperty CultureProperty =
     Helper.Register<CultureInfo, AbstractCalendarView>(nameof(Culture), CultureInfo.CurrentUICulture, OnCulturePropertyChanged);
+
+    protected readonly ResourceManager rm = new("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
 
     public CultureInfo Culture
     {

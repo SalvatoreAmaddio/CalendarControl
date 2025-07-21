@@ -263,7 +263,7 @@ public class WeekView : AbstractCalendarView
             Command = DeleteCommand,
             CommandParameter = evt,
             Padding = new(0),
-            ToolTip = "Elimina",
+            ToolTip = rm.GetString("Delete", Culture) ?? "Error",
             HorizontalAlignment = HorizontalAlignment.Right,
             VerticalAlignment = VerticalAlignment.Top,
             Content = new PackIcon() { Kind = PackIconKind.CloseThick }
@@ -272,7 +272,7 @@ public class WeekView : AbstractCalendarView
         TextBlock txt = new()
         {
             Cursor = Cursors.Hand,
-            ToolTip = "Clicca per Aggiungere/Modificare",
+            ToolTip = rm.GetString("WeekViewEvent", Culture) ?? "Error",
             Text = $"{evt.Title}\n{evt.Location}\n{evt.StartTime:hh\\:mm} - {evt.EndTime:hh\\:mm}",
             TextWrapping = TextWrapping.Wrap,
             Padding = new Thickness(6),

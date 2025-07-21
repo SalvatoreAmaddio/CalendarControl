@@ -138,4 +138,7 @@
   <data name="TodayContentWeek" xml:space="preserve">
     <value>Settimana Corrente</value>
   </data>
+  <data name="WeekViewEvent" xml:space="preserve">
+    <value>Clicca per Aggiungere/Modificare</value>
+  </data>
 </root>
