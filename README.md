@@ -53,3 +53,21 @@ Once you've installed the Material Design package you must add this to your App.
         </ResourceDictionary>
     </Application.Resources>
 ```
+
+## Explaining The EventDrop Command
+In the CalendarControl the EventDropCommand is invoked after an event record 
+has been moved via drag-and-drop. It receives an updated IDatable object. 
+The control has already modified the DateOf, StartTime, and EndTime properties, 
+and the command is responsible for saving the updated data. For example in your ViewModel:
+```csharp
+
+    public ICommand EventDropCommand => new AsyncRelayCommand<IDatable>(EventDropAsync);
+
+    private async Task EventDropAsync(IDatable? datable)
+    {
+        if (datable is EventModel model)
+        {
+            await DatabaseManager.UpdateEventAsync(model); //update in the database
+        }
+    }
+```
