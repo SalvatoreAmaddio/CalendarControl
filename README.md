@@ -35,3 +35,21 @@ or copy and paste
 ```
 <PackageReference Include="CalendarControl" Version="1.0.3" />
 ```
+
+Once you've installed the Material Design package you must add this to your App.xaml file:
+```xml
+     ...
+     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     ...
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Theme definition -->
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Indigo" SecondaryColor="Lime" />
+
+                <!-- Core styles -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+```
