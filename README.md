@@ -20,8 +20,10 @@ Before using `CalendarControl`, you **must install** the [MaterialDesignInXAML T
 
 ```code
 <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+```
 
 ## 📦 Installation
 
 ```bash
 dotnet add package CalendarControl
+```
