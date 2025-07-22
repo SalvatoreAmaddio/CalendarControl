@@ -7,7 +7,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Authors>Salvatore Amaddio</Authors>
 		<Company>Salvatore Amaddio</Company>
-		<Version>1.0.26</Version>
+		<Version>1.0.2</Version>
+		<Description>
+			Calendar control for WPF which uses MaterialDesign
+		</Description>
 	</PropertyGroup>
 
 	<PropertyGroup>
