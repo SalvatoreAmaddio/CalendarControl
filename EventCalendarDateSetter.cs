@@ -9,8 +9,9 @@ namespace CalendarControl;
 
 public class EventCalendarDateSetter : Control
 {
-    public static readonly DependencyProperty IsToggledProperty = Helper.Register<bool, EventCalendarDateSetter>(nameof(IsToggled), false, OnIsToggledPropertyChanged);    
+    public static readonly DependencyProperty IsWeekViewProperty = Helper.Register<bool, EventCalendarDateSetter>(nameof(IsWeekView), false, OnIsToggledPropertyChanged);
     public static readonly DependencyProperty TodayContentProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(TodayContent), "Mese Corrente");
+    public static readonly DependencyProperty WeekViewTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(WeekViewTooltip), string.Empty);
     public static readonly DependencyProperty PreviousButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(PreviousButtonTooltip), "Mese Precedente");
     public static readonly DependencyProperty NextButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(NextButtonTooltip), "Prossimo Mese");
     public static readonly DependencyProperty DateVisibilityProperty = Helper.Register<Visibility, EventCalendarDateSetter>(nameof(DateVisibility), Visibility.Collapsed);
@@ -21,18 +22,17 @@ public class EventCalendarDateSetter : Control
     public static readonly DependencyProperty PreviousMonthCommandProperty = Helper.Register<ICommand, EventCalendarDateSetter>(nameof(PreviousMonthCommand));
     public static readonly DependencyProperty NextYearCommandProperty = Helper.Register<ICommand, EventCalendarDateSetter>(nameof(NextYearCommand));
     public static readonly DependencyProperty NextMonthCommandProperty = Helper.Register<ICommand, EventCalendarDateSetter>(nameof(NextMonthCommand));
-    public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, EventCalendarDateSetter>(nameof(Date));
+    public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, EventCalendarDateSetter>(nameof(Date), DateTime.Now);
     public static readonly DependencyProperty YearProperty = Helper.Register<int, EventCalendarDateSetter>(nameof(Year), DateTime.Now.Year, (s, e) => ((EventCalendarDateSetter)s).RefreshDate());
     public static readonly DependencyProperty MonthsProperty = Helper.Register<IEnumerable<string>, EventCalendarDateSetter>(nameof(Months));
-    
-    public static readonly DependencyProperty SelectedMonthIndexProperty = 
+
+    public static readonly DependencyProperty SelectedMonthIndexProperty =
     Helper.Register<int, EventCalendarDateSetter>(nameof(SelectedMonthIndex), DateTime.Now.Month - 1, (s, e) => ((EventCalendarDateSetter)s).RefreshDate());
 
     public static readonly DependencyProperty CultureProperty =
     Helper.Register<CultureInfo, EventCalendarDateSetter>(nameof(Culture), CultureInfo.CurrentUICulture, OnCultureChanged);
 
     private readonly ResourceManager rm = new("CalendarControl.Resources.Strings", typeof(EventCalendarDateSetter).Assembly);
-
 
     public CultureInfo Culture
     {
@@ -44,6 +44,12 @@ public class EventCalendarDateSetter : Control
     {
         get => (string)GetValue(TodayContentProperty);
         set => SetValue(TodayContentProperty, value);
+    }
+
+    public string WeekViewTooltip
+    {
+        get => (string)GetValue(WeekViewTooltipProperty);
+        set => SetValue(WeekViewTooltipProperty, value);
     }
 
     public string PreviousButtonTooltip
@@ -90,18 +96,40 @@ public class EventCalendarDateSetter : Control
 
     private void UpdateLocalizedStrings()
     {
-        if (IsToggled)
+        if (IsWeekView)
         {
             TodayContent = rm.GetString("TodayContentWeek", Culture) ?? "Error";
             PreviousButtonTooltip = rm.GetString("PreviousWeek", Culture) ?? "Error";
             NextButtonTooltip = rm.GetString("NextWeek", Culture) ?? "Error";
+            WeekViewTooltip = rm.GetString("WeekView", Culture) ?? "Error";
+
+            DateTime firstDayOfMonth = new(Date.Year, Date.Month, 1);
+
+            int diff = (int)firstDayOfMonth.DayOfWeek;
+            int daysToSubtract = diff == 0 ? 6 : diff - 1;
+            DateTime mondayOfFirstWeek = firstDayOfMonth.AddDays(-daysToSubtract);
+
+            // Only set it if current Date is not already in the same week
+            if (GetMonday(Date) != mondayOfFirstWeek)
+            {
+                SetCurrentValue(DateProperty, mondayOfFirstWeek);
+            }
         }
         else
         {
             TodayContent = rm.GetString("TodayContentMonth", Culture) ?? "Error";
             PreviousButtonTooltip = rm.GetString("PreviousMonth", Culture) ?? "Error";
             NextButtonTooltip = rm.GetString("NextMonth", Culture) ?? "Error";
+            WeekViewTooltip = rm.GetString("WeekView", Culture) ?? "Error";
+            SetCurrentValue(DateProperty, new DateTime(Date.Year, Date.Month, 1));
         }
+    }
+
+    private static DateTime GetMonday(DateTime date)
+    {
+        int diff = (int)date.DayOfWeek;
+        int daysToSubtract = diff == 0 ? 6 : diff - 1;
+        return date.AddDays(-daysToSubtract).Date;
     }
 
     private static void OnIsToggledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -134,10 +162,10 @@ public class EventCalendarDateSetter : Control
         }
     }
 
-    public bool IsToggled
+    public bool IsWeekView
     {
-        get => (bool)GetValue(IsToggledProperty);
-        set => SetValue(IsToggledProperty, value);
+        get => (bool)GetValue(IsWeekViewProperty);
+        set => SetValue(IsWeekViewProperty, value);
     }
 
     public ICommand TodayCommand
@@ -217,7 +245,7 @@ public class EventCalendarDateSetter : Control
     private void Today()
     {
         DateTime today = DateTime.Today;
-        if (IsToggled)
+        if (IsWeekView)
         {
             Date = today.AddDays(-(int)today.DayOfWeek + (today.DayOfWeek == DayOfWeek.Sunday ? -6 : 1));
         }
@@ -230,7 +258,7 @@ public class EventCalendarDateSetter : Control
 
     private void NextMonth()
     {
-        if (IsToggled)
+        if (IsWeekView)
         {
             int daysUntilMonday = ((int)DayOfWeek.Monday - (int)Date.DayOfWeek + 7) % 7;
             daysUntilMonday = daysUntilMonday == 0 ? 7 : daysUntilMonday;
@@ -255,7 +283,7 @@ public class EventCalendarDateSetter : Control
 
     private void PreviousMonth()
     {
-        if (IsToggled)
+        if (IsWeekView)
         {
             int daysUntilMonday = ((int)DayOfWeek.Monday - (int)Date.DayOfWeek + 7) % 7;
             daysUntilMonday = daysUntilMonday == 0 ? 7 : daysUntilMonday;

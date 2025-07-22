@@ -84,7 +84,7 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock VerticalAlignment="Center" Background="#A8CAE8" Text="{Binding .}" TextWrapping="NoWrap" ToolTip="{Binding Title}"/>
-                                                    <Button Grid.Column="1" 
+                                                    <Button Grid.Column="1"                                      
                                                             ToolTip="{Binding Data, Source={StaticResource deleteToolTip}}" 
                                                             Command="{Binding Data, Source={StaticResource deleteCommand}}" 
                                                             CommandParameter="{Binding .}"

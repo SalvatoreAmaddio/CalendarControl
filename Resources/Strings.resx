@@ -138,6 +138,9 @@
   <data name="TodayContentWeek" xml:space="preserve">
     <value>Current Week</value>
   </data>
+  <data name="WeekView" xml:space="preserve">
+    <value>Week View</value>
+  </data>
   <data name="WeekViewEvent" xml:space="preserve">
     <value>Click to Add/Edit</value>
   </data>

@@ -8,7 +8,7 @@ namespace CalendarControl;
 
 public class Calendar : Control
 {
-    public static readonly DependencyProperty IsToggledProperty = Helper.Register<bool, Calendar>(nameof(IsToggled), false);
+    public static readonly DependencyProperty IsWeekViewProperty = Helper.Register<bool, Calendar>(nameof(IsWeekView), false);
     public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, Calendar>(nameof(Date));
     public static readonly DependencyProperty IsLoadingProperty = Helper.Register<bool, Calendar>(nameof(IsLoading));
     public static readonly DependencyProperty AddEventCommandProperty = Helper.Register<ICommand, Calendar>(nameof(AddEventCommand));
@@ -72,10 +72,10 @@ public class Calendar : Control
         set => SetValue(IsLoadingProperty, value);
     }
 
-    public bool IsToggled
+    public bool IsWeekView
     {
-        get => (bool)GetValue(IsToggledProperty);
-        set => SetValue(IsToggledProperty, value);
+        get => (bool)GetValue(IsWeekViewProperty);
+        set => SetValue(IsWeekViewProperty, value);
     }
 
     public DateTime Date

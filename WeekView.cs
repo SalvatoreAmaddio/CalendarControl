@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -239,7 +238,7 @@ public class WeekView : AbstractCalendarView
 
             Border border;
 
-            if (evt.Title.Length > 0)
+            if (evt.Title.Length > 0 && (evt.DateOf >= Date && evt.DateOf <= Date.AddDays(6)))
             {
                 border = EventSlot(canvas.ActualWidth, height, evt);
             }
@@ -464,6 +463,8 @@ public class WeekView : AbstractCalendarView
     protected override void OnDateChanged()
     {
         UpdateHeaders();
+        DrawAppointments();
+        DrawCurrentTimeLine();
     }
 
     protected override void OnCultureChanged()

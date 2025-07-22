@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:CalendarControl">
+    xmlns:local="clr-namespace:CalendarControl"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/CalendarControl;component/Themes/EventCalendarDateSetter.xaml"/>
@@ -25,7 +26,7 @@
                                                        Padding="10,10,10,30"
                                                        Margin="{Binding HeaderMargin, RelativeSource={RelativeSource TemplatedParent}}"
                                                        Date="{Binding Date, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                       IsToggled="{Binding IsToggled, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       IsWeekView="{Binding IsWeekView, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        Culture="{Binding Culture, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                        />
 

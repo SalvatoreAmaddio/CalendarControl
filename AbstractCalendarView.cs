@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Globalization;
 using System.Resources;
+using System.Collections.ObjectModel;
 
 namespace CalendarControl;
 
@@ -12,9 +13,9 @@ public abstract class AbstractCalendarView : Control
     public static readonly DependencyProperty EventDropCommandProperty = Helper.Register<ICommand, AbstractCalendarView>(nameof(EventDropCommand));
     public static readonly DependencyProperty SelectedEventCommandProperty = Helper.Register<ICommand, AbstractCalendarView>(nameof(SelectedEventCommand));
     public static readonly DependencyProperty DeleteCommandProperty = Helper.Register<ICommand, AbstractCalendarView>(nameof(DeleteCommand));
-    public static readonly DependencyProperty EventsProperty = Helper.Register<IEnumerable<IDatable>, AbstractCalendarView>(nameof(Events), OnEventsSourcePropertyChanged);
+    public static readonly DependencyProperty EventsProperty = Helper.Register<ObservableCollection<IDatable>, AbstractCalendarView>(nameof(Events), OnEventsSourcePropertyChanged);
     public static readonly DependencyProperty DateProperty = Helper.Register<DateTime, AbstractCalendarView>(nameof(Date), DateTime.Now, OnDatePropertyChanged);
-    
+
     public static readonly DependencyProperty CultureProperty =
     Helper.Register<CultureInfo, AbstractCalendarView>(nameof(Culture), CultureInfo.CurrentUICulture, OnCulturePropertyChanged);
 
@@ -64,9 +65,9 @@ public abstract class AbstractCalendarView : Control
         }
     }
 
-    public IEnumerable<IDatable> Events
+    public ObservableCollection<IDatable> Events
     {
-        get => (IEnumerable<IDatable>)GetValue(EventsProperty);
+        get => (ObservableCollection<IDatable>)GetValue(EventsProperty);
         set => SetValue(EventsProperty, value);
     }
 
