@@ -31,7 +31,7 @@
                                           MinWidth="50"
                                           ToolTip="{Binding WeekViewTooltip}"/>
 
-                            <Button x:Name="prevYear" Width="33" ToolTip="Anno precedente" Command="{Binding PreviousYearCommand}">
+                            <Button x:Name="prevYear" Width="33" ToolTip="{Binding PreviousYearTooltip}" Command="{Binding PreviousYearCommand}">
                                 <WrapPanel>
                                     <materialDesign:PackIcon Kind="MenuLeft"/>
                                     <materialDesign:PackIcon Kind="MenuLeft"/>
@@ -68,15 +68,14 @@
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
                                      Visibility="{Binding DateVisibility}"
-                                     materialDesign:HintAssist.Hint="Premi uno dei bottoni"
-                                     materialDesign:HintAssist.HelperText="Settimana"/>
+                                     materialDesign:HintAssist.HelperText="{Binding WeekString}"/>
 
                             <Button x:Name="nextMonth" Width="22" ToolTip="{Binding NextButtonTooltip}" Command="{Binding NextMonthCommand}">
                                 <WrapPanel>
                                     <materialDesign:PackIcon Kind="MenuRight"/>
                                 </WrapPanel>
                             </Button>
-                            <Button x:Name="nextYear" Width="33" ToolTip="Anno successivo" Command="{Binding NextYearCommand}">
+                            <Button x:Name="nextYear" Width="33" ToolTip="{Binding NextYearTooltip}" Command="{Binding NextYearCommand}">
                                 <WrapPanel>
                                     <materialDesign:PackIcon Kind="MenuRight"/>
                                     <materialDesign:PackIcon Kind="MenuRight"/>

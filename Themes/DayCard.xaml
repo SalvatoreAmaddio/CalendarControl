@@ -80,7 +80,7 @@
                                             <Border BorderBrush="Black" BorderThickness="0,0,0,1" Padding="0,0,0,5">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="130"/>
+                                                        <ColumnDefinition Width="114"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock VerticalAlignment="Center" Background="#A8CAE8" Text="{Binding .}" TextWrapping="NoWrap" ToolTip="{Binding Title}"/>

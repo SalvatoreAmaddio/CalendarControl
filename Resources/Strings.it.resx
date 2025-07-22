@@ -126,17 +126,26 @@
   <data name="NextWeek" xml:space="preserve">
     <value>Prossima Settimana</value>
   </data>
+  <data name="NextYear" xml:space="preserve">
+    <value>Anno Successivo</value>
+  </data>
   <data name="PreviousMonth" xml:space="preserve">
     <value>Mese Precedente</value>
   </data>
   <data name="PreviousWeek" xml:space="preserve">
     <value>Settimana Precedente</value>
   </data>
+  <data name="PreviousYear" xml:space="preserve">
+    <value>Anno Precedente</value>
+  </data>
   <data name="TodayContentMonth" xml:space="preserve">
     <value>Mese Corrente</value>
   </data>
   <data name="TodayContentWeek" xml:space="preserve">
     <value>Settimana Corrente</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Settimana</value>
   </data>
   <data name="WeekView" xml:space="preserve">
     <value>Calendario Settimanale</value>

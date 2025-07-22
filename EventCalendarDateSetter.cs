@@ -10,10 +10,13 @@ namespace CalendarControl;
 public class EventCalendarDateSetter : Control
 {
     public static readonly DependencyProperty IsWeekViewProperty = Helper.Register<bool, EventCalendarDateSetter>(nameof(IsWeekView), false, OnIsToggledPropertyChanged);
-    public static readonly DependencyProperty TodayContentProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(TodayContent), "Mese Corrente");
+    public static readonly DependencyProperty TodayContentProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(TodayContent));
+    public static readonly DependencyProperty WeekStringProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(WeekString));
     public static readonly DependencyProperty WeekViewTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(WeekViewTooltip), string.Empty);
-    public static readonly DependencyProperty PreviousButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(PreviousButtonTooltip), "Mese Precedente");
-    public static readonly DependencyProperty NextButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(NextButtonTooltip), "Prossimo Mese");
+    public static readonly DependencyProperty PreviousButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(PreviousButtonTooltip));
+    public static readonly DependencyProperty NextButtonTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(NextButtonTooltip));
+    public static readonly DependencyProperty NextYearTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(NextYearTooltip));
+    public static readonly DependencyProperty PreviousYearTooltipProperty = Helper.Register<string, EventCalendarDateSetter>(nameof(PreviousYearTooltip));
     public static readonly DependencyProperty DateVisibilityProperty = Helper.Register<Visibility, EventCalendarDateSetter>(nameof(DateVisibility), Visibility.Collapsed);
     public static readonly DependencyProperty YearVisibilityProperty = Helper.Register<Visibility, EventCalendarDateSetter>(nameof(YearVisibility), Visibility.Visible);
     public static readonly DependencyProperty MonthVisibilityProperty = Helper.Register<Visibility, EventCalendarDateSetter>(nameof(MonthVisibility), Visibility.Visible);
@@ -45,11 +48,29 @@ public class EventCalendarDateSetter : Control
         get => (string)GetValue(TodayContentProperty);
         set => SetValue(TodayContentProperty, value);
     }
+    
+    public string WeekString
+    {
+        get => (string)GetValue(WeekStringProperty);
+        set => SetValue(WeekStringProperty, value);
+    }
 
     public string WeekViewTooltip
     {
         get => (string)GetValue(WeekViewTooltipProperty);
         set => SetValue(WeekViewTooltipProperty, value);
+    }
+
+    public string PreviousYearTooltip
+    {
+        get => (string)GetValue(PreviousYearTooltipProperty);
+        set => SetValue(PreviousYearTooltipProperty, value);
+    }
+
+    public string NextYearTooltip
+    {
+        get => (string)GetValue(NextYearTooltipProperty);
+        set => SetValue(NextYearTooltipProperty, value);
     }
 
     public string PreviousButtonTooltip
@@ -96,12 +117,16 @@ public class EventCalendarDateSetter : Control
 
     private void UpdateLocalizedStrings()
     {
+        PreviousYearTooltip = rm.GetString("PreviousYear", Culture) ?? "Error";
+        NextYearTooltip = rm.GetString("NextYear", Culture) ?? "Error";
+
         if (IsWeekView)
         {
             TodayContent = rm.GetString("TodayContentWeek", Culture) ?? "Error";
             PreviousButtonTooltip = rm.GetString("PreviousWeek", Culture) ?? "Error";
             NextButtonTooltip = rm.GetString("NextWeek", Culture) ?? "Error";
             WeekViewTooltip = rm.GetString("WeekView", Culture) ?? "Error";
+            WeekString = rm.GetString("Week", Culture) ?? "Error";
 
             DateTime firstDayOfMonth = new(Date.Year, Date.Month, 1);
 
