@@ -13,7 +13,7 @@ A flexible and modern WPF **Calendar Control** that supports both **Month View**
 - 🎨 Built with **Material Design** for a modern, clean UI
 - 🖱️ Clickable day cards to add or select events
 - 🔀 **Drag and Drop** events between days
-- 📦 Available via **NuGet**
+- 📦 Available via **NuGet** [`Click Here`](https://www.nuget.org/packages/CalendarControl)
 
 ---
 
