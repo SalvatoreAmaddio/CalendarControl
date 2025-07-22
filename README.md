@@ -2,6 +2,9 @@
 
 A flexible and modern WPF **Calendar Control** that supports both **Month View** and **Week View**, fully styled with [Material Design in XAML](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit).
 
+> 💡 See a working example here:  
+👉 **[CalendarExample GitHub Repository](https://github.com/SalvatoreAmaddio/CalendarExample)**
+
 ---
 
 ## ✨ Features
