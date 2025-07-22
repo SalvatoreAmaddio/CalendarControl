@@ -14,6 +14,13 @@ A flexible and modern WPF **Calendar Control** that supports both **Month View**
 
 ---
 
+## ⚠️ Prerequisite: Install Material Design
+
+Before using `CalendarControl`, you **must install** the [MaterialDesignInXAML Toolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit) in your WPF project:
+
+```code
+<PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+
 ## 📦 Installation
 
 ```bash
